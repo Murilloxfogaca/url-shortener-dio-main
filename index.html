@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="url shortener">
+		<title>UrlShortner</title>
+		<link rel="stylesheet" href="index.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" text="text/javascript"></script>
+	</head>
+	<body>
+		<h1>Url Shortner</h1>
+			<div class="section group">
+				<div class="col span_3_of_3">
+					<input required type="url" id="input" name="url" class="input" placeholder="Digite uma URL aqui">
+				</div>
+				<button type="submit" class="submit">Encurtar</button>
+			</div>
+		<script>
+		$(document).ready(function() {
+			$(".submit").click(function() {
+				var usernameSelected = $('#input');
+				
+				var url = "http://localhost:5000/shorten";
+				var formData = {'originURL':usernameSelected.val()};
+				//formData = JSON.stringify(formData);
+				
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: formData,
+					crossDomain: true,
+					dataType: 'json',
+					encode: true,
+					success: function(response) {
+						let reposta = ' ID: '+response._id+'\n hash: '+response.hash+'\n shortURL: '+response.shortURL;
+						alert(reposta);
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+			});
+			jQuery.support.cors = true;
+		});
+		</script>
+	</body>
+</html>
